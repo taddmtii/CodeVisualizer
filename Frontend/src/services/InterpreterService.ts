@@ -19,13 +19,18 @@ export class InterpreterService {
       null, // currentExpression
       null, // currentStatement
       [], // evaluationStack
-      [],
+      [], // loopStack
       [], // outputs
       new Map(), // loopIterationState
       null, // error
       new Map(), // functionDefinitions
       [new Map()], // scopeStack
       ['Global'], // scopeNames
+      false, // isPredictMode
+      false, // waitingForPrediction
+      null, // predictionVariable
+      null, // predictionCorrectValue
+      [], // functionCallStack
     );
   }
 
@@ -60,13 +65,18 @@ export class InterpreterService {
         null, // currentExpression
         null, // currentStatement
         [], // evaluationStack
-        [],
+        [], // loopStack
         [], // outputs
         new Map(), // loopIterationState
         null, // error
         new Map(), // functionDefinitions
         [new Map()], // scopeStack
         ['Global'], // scopeNames
+        savedPredictMode, // isPredictMode
+        false, // waitingForPrediction
+        null, // predictionVariable
+        null, // predictionCorrectValue
+        [], // functionCallStack
       );
 
       this.parseErrorMessage = null;

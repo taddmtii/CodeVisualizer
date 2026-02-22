@@ -11,7 +11,6 @@ import type { InterpreterError } from '../../Parser/Errors';
 
 export interface SimplifiedState {
   variables: Record<string, PythonValue>;
-  currentLine: number;
   outputs: PythonValue[];
   canStepForward: boolean;
   canStepBackward: boolean;
@@ -46,7 +45,6 @@ function App() {
 
   const [interpreterState, setInterpreterState] = useState<SimplifiedState>({
     variables: {},
-    currentLine: 1,
     outputs: [],
     canStepForward: false,
     canStepBackward: false,
@@ -59,6 +57,7 @@ function App() {
     scopeStack: [],
     error: null,
     parseError: null,
+    loopIterationState: new Map(),
   });
 
   // handles when we want to clear errors and restart execution.
@@ -69,7 +68,6 @@ function App() {
     interpreterServiceReference.current.setPredictMode(shouldBePredictMode);
     setInterpreterState({
       variables: {},
-      currentLine: 1,
       outputs: [],
       canStepForward: false,
       canStepBackward: false,
@@ -82,6 +80,7 @@ function App() {
       scopeNames: [],
       error: null,
       parseError: null,
+      loopIterationState: new Map(),
     });
   }
 
@@ -240,7 +239,6 @@ function App() {
           <CodeWindow
             code={code}
             onCodeChange={handleCodeChange}
-            currentLine={interpreterState.currentLine}
             highlightedStatement={interpreterState.highlightedStatement}
             highlightedExpression={interpreterState.highlightedExpression}
           />

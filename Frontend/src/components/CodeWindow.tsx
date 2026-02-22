@@ -6,7 +6,6 @@ import * as monaco from 'monaco-editor';
 interface CodeWindowProps {
   code: string;
   onCodeChange: (code: string) => void;
-  currentLine: number;
   highlightedStatement: { startLine: number; endLine: number } | null;
   highlightedExpression: {
     line: number;
@@ -19,7 +18,6 @@ interface CodeWindowProps {
 function CodeWindow({
   code,
   onCodeChange,
-  currentLine,
   highlightedStatement,
   highlightedExpression,
 }: CodeWindowProps) {
