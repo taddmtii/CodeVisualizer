@@ -412,24 +412,12 @@ function VariablesWindow({
                                     .filter(([varName, mappedList]) => {
                                       if (mappedList !== name) return false;
                                       const varValue = scopeStack[scopeStack.length - 1].get(varName);
-                                      // does variable equal this index (for range() loops)
-                                      if (varValue === idx) return true;
-                                      // does variable equal the literal item value.
-                                      if (varValue === item && idx === value.indexOf(item)) return true;
-                                      return false;
+                                      // only check if variable equals this index
+                                      return varValue === idx;
                                     })
                                     .map(([varName]) => varName);
-
-                                  const indexVars = mappedVars.filter(varName => {
-                                    const varValue = scopeStack[scopeStack.length - 1].get(varName);
-                                    return varValue === idx;
-                                  });
-
-                                  const valueVars = mappedVars.filter(varName => {
-                                    const varValue = scopeStack[scopeStack.length - 1].get(varName);
-                                    return varValue === item;
-                                  });
-
+                                  const indexVars = mappedVars;
+                                  const valueVars: string[] = [];
                                   // check if predicting at a certain index.
                                   const isPredictingIndex =
                                     mode === 'predict' &&
