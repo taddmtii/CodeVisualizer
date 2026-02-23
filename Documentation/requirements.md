@@ -1,6 +1,6 @@
 *inspired* by template: https://www.perforce.com/blog/alm/how-write-software-requirements-specification-srs-document
 
-Project: CodeLens <br>
+Project: Code Visualizer <br>
 Prepared by: Tadd Trumbull <br>
 Course: CPTR-486 Senior Seminar
 

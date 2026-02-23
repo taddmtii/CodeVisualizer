@@ -2,7 +2,7 @@
 
 ## Overview of PyViz
 
-PyViz is a subset of Python designed for the sole purpose of learning fundamental programming algorithms. CodeLens guides students through searching and sorting algorithms through the use of its step by step interpreter design, and PyViz is purposefully restrictive for this reason. PyViz includes essential features like functions, loops, and control flow while excluding more advanced features like calsses, decorators, and exception handling.
+PyViz is a subset of Python designed for the sole purpose of learning fundamental programming algorithms. The Code Visualizer guides students through searching and sorting algorithms through the use of its step by step interpreter design, and PyViz is purposefully restrictive for this reason. PyViz includes essential features like functions, loops, and control flow while excluding more advanced features like calsses, decorators, and exception handling.
 
 ## Basic Syntax
 
