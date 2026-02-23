@@ -9,10 +9,10 @@ function Header({ page, setPage }: HeaderProps) {
     <>
       {/* Main container */}
       <div className="flex w-100vw p-4 bg-[#3D3D3D] justify-between">
-        {/* CodeLens title */}
+        {/* Code Visualizer title */}
         <div className="flex gap-4 ml-4">
-          <h1 className="flex text-white text-2xl ">CodeLens</h1>
-          <a href="https://github.com/taddmtii/CodeLens/blob/main/Documentation/PyVizDocumentation.md" target="_blank">
+          <h1 className="flex text-white text-2xl ">CodeVisualizer</h1>
+          <a href="https://github.com/taddmtii/CodeVisualizer/blob/main/Documentation/PyVizDocumentation.md" target="_blank">
             <button
               className={`btn text-white font-bold bg-[#242424] hover:bg-[#343434] py-2 px-2 cursor-pointer rounded`}
             >
