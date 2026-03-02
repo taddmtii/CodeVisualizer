@@ -34,6 +34,13 @@ active = True
 price = 19.21
 ```
 
+### Multi-Assignment
+
+Multiple variables can be assigned in a single statement.
+```python
+a, b, c = 1, 2, 3
+```
+
 ### Supported Data Types
 
 - **Int**: Whole Numbers (42, -21, 0)
@@ -42,6 +49,12 @@ price = 19.21
 - **Bool**: True or False
 - **List**: Ordered, contigious collections of elements in virtual memory. ([1,2,3], ["a", "b", "c"])
 - **None**: Represents absence of value
+
+PyViz also supports hexadecimal and binary integer literals.
+```python
+hex_val = 0xFF   # 255 in decimal
+bin_val = 0b1010 # 10 in decimal
+```
 
 ## Output
 
@@ -57,7 +70,7 @@ print(f"Hello, {name}. You are {age - 12} years old.")
 
 ## Operators
 
-There are three types of operators in PyViz:
+There are five types of operators in PyViz:
 
 ### Arithmetic Operators
 
@@ -69,6 +82,15 @@ There are three types of operators in PyViz:
 - Modulous `%`
 - Exponentiation `**`
 
+### Unary Operators
+
+The `+` and `-` operators can also be applied to a single operand.
+```python
+x = -5
+y = +3
+z = -(x + y)
+```
+
 ### Comparison Operators
 
 - Equal to `==`
@@ -77,6 +99,8 @@ There are three types of operators in PyViz:
 - Greater than `>`
 - Less than or equal `<=`
 - Greater than or equal `>=`
+- Membership `in`
+- Non-membership `not in`
 
 ### Logical Operators
 
@@ -133,6 +157,17 @@ if is_weekend:
         print("Stay home and relax")
 else:
     print("Go to work")
+```
+
+## Conditional Expressions (Ternary)
+
+PyViz supports inline conditional expressions (ternary expressions). The condition appears in the **middle**:
+```python
+result = value_if_true if condition else value_if_false
+```
+```python
+x = 10
+label = "big" if x > 5 else "small"
 ```
 
 ## Loops 
