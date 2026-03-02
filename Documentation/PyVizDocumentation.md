@@ -100,7 +100,6 @@ z = -(x + y)
 - Less than or equal `<=`
 - Greater than or equal `>=`
 - Membership `in`
-- Non-membership `not in`
 
 ### Logical Operators
 

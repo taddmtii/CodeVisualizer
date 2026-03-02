@@ -858,6 +858,15 @@ export class ComparisonOpCommand extends Command {
       case "==":
         res = evaluatedLeft === evaluatedRight;
         break;
+      case "in":
+        if (Array.isArray(evaluatedRight)) {
+          res = evaluatedRight.includes(evaluatedLeft);
+        } else if (typeof evaluatedRight === "string") {
+          res = (evaluatedRight as string).includes(String(evaluatedLeft));
+        } else {
+          res = false;
+        }
+        break;
       default:
         res = false;
     }
