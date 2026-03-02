@@ -1,17 +1,8 @@
-// {type:usecase}
-// {direction:leftToRight}
-
-//Rules for Inheritance
-
-//Instructor inherits from Student
-// [Instructor]^[Student] 
-// [Content Creator]^[Instructor]
 
 //Student
 [Student]-(Run algorithm)
 [Student]-(Save Instance)
 [Student]-(Load Instance)
-//[Student]-(Take quizzes)
 [Student]-(View Results)
 [Student]-(View documentation)
 [Student]-(View leaderboard)
@@ -21,65 +12,15 @@
 [Student]-(Login*)
 (Run algorithm) > (Step forward/back)
 (Run algorithm) > (Bind index var)
-// Types of steps to count:
-// - Array read/write operations
-// - Arithmetic / Logic (+ * - / && || ! ++ -- != == += -=)
-// - Variable access
-// - Total # of steps
-// * nested tree of counts for read and write operations
 (Run algorithm) > (Evaluate expression)
 (Evaluate expression) < (Access element)
 (Evaluate expression) < (Create var)
 (Run algorithm) > (Toggle mode)
-(Run algorithm) < (Predict mode) 
+(Run algorithm) < (Predict mode)
 (Run algorithm) < (View mode)
 
 (Predict) > (Variable change)
 (Variable change) < (Element Change)
 (Variable change) < (Index change)
-// next line may need some clarification
 (Predict) > (Next line)
 (Predict) > (Count steps)
-// refer to line 23
-
-//Instructor
-//[Instructor]-(Create quizzes)
-// [Instructor]-(Manage student progress)
-// [Instructor]-(Manage leaderboards)
-// [Instructor]-(Review student attempts)
-// [Instructor]-(Assign algorithms to students)
-
-// //Administrator
-// [Administrator]-(Manage system users and roles)
-// [Administrator]-(Configure database)
-// [Administrator]-(Integrate external connections)
-
-// //Content Creator
-// [Content Creator]-(Design new algorithms)
-
-// include line numbers (non func requirement)
-
-// Tech stack / "wireframe"
-//    - React, Typescript, Node.js, React Router
-
-// http://jsav.io/
-// https://www.bottlecaps.de/rr/ui
-// https://github.com/jesse-r-s-hines/MultithreadingDemo?tab=readme-ov-file
-// https://nearley.js.org/
-// https://uiwjs.github.io/react-codemirror/
-// https://docs.python.org/3/reference/simple_stmts.html#grammar-token-python-grammar-assignment_stmt
-
-//https://www.craftinginterpreters.com/introduction.html INTERPRETER TEXTBOOK
-
-// Grammar: (Python)
-// assignment statement: IDENTIFIER EQ (NUMBER | IDENTIFIER )
-// list literal: LEFT_SQ_BRACKET (NUMBER_LIST) RIGHT_SQ_BRACKET
-// basic arithmetic expressions: '+' | '-' | '*' | '/' (PLUS, SUB, MULT, DIV)
-// variable access: lets talk about what this means exactly. (a = b + c or something like print(a))
-// array subscripting (access): IDENTIFIER LEFT_SQ_BRACKET NUMBER RIGHT_SQ_BRACKET 
-// method calls (like list.append): APPEND LEFT_PAREN ( IDENTIFIER | NUMBER ) RIGHT_PAREN
-// function definitions
-
-// 0x -> Hex
-// 0b -> Binary
-// 0o -> Octal (Base 8)

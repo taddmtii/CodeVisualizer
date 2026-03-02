@@ -13,10 +13,6 @@ Course: CPTR-486 Senior Seminar
 
         Students: The indended user base, undergraduate students enrolled in programming courses such as Fundamentals of Software Design or Data Structures and Algorithms.
 
-        Instructor: Professor who is utilizing this tool to help support teaching.
-
-        Administrators: Developers and system admins, needed for maintenance.
-
     1.3 Product Scope
 
         CodeLens simulates core array based searching and sorting algorithms by supporting step by step alteration of array elements, and giving visual feedback on operations with analytics to supplement understanding of time complexity.

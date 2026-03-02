@@ -1,0 +1,156 @@
+\documentclass{IEEEtran}
+\usepackage{graphicx}
+\usepackage[export]{adjustbox}
+
+\title{Code Visualizer: An interactive code visualization tool for simulating array traversal and manipulation of fundamental algorithms.}
+\author{Tadd Trumbull II}
+\date{March 2026}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Code Visualizer is a web-based, interactive algorithm visualization tool designed to help introductory computer science students develop a deeper understanding of array searching and sorting algorithms. Code Visualizer presents a step-by-step simulation environment built on a restricted Python subset, which allows students to observe array traversal, index manipulation, and algorithmic operations in real time. The tool features two learning modes: View Mode, which offers immediate visual feedback as students step forward and backward through an algorithm, and Predict Mode, which requires students to anticipate value changes before execution, promoting active engagement and learning. The underlying architecture utilizes a behavioral software design pattern called command pattern to support efficient bidirectional execution within a client-side browser environment. User testing with introductory computer science students suggests that Code Visualizer serves as an effective supplement to traditional lecture and lab instruction, bridging the gap between abstract pseudocode and practical algorithmic application.
+\end{abstract}
+
+\section{Introduction}
+Array searching and sorting algorithms are foundational in computer science academia. An array, by definition, is a collection of elements stored contiguously in the computers memory. Unfortunately, students often struggle to internalize on a deeper level these concepts when taught solely through pseudocode or static diagrams.
+
+Code Visualizer allows for that gap to be diminished, providing an interactive, step-by-step simulation environment where students can write and execute programs using a restricted Python subset, with particular emphasis on array manipulation, index variables, and algorithmic operations. Students will be able to observe the effect of comparisons and index swaps, and track the number of operations to intuitively grasp time complexity, a fundamental concept in understanding the time and space efficiency of an algorithm. By simulating algorithms at this low level, the project bridges the gap between theoretical abstraction and practical insight, making it easier for students to master fundamental algorithmic thinking.
+
+The dual-mode approach of Code Visualizer serves two distinct purposes: Predict Mode encourages learning by requiring students to guess algorithmic behavior before executing it for themselves, while View Mode provides immediate visual feedback to reinforce understanding through stepping through.
+\subsection{Problem Statement}
+Students often struggle to visualize these simple algorithms when the concept is first introduced, and traditional teaching methods typically present algorithms as abstract pseudocode, static diagrams or graphs. A prevalent challenge students face is a disconnect between abstract pseudocode and actual logic and execution. A student may know what swapping arr[i] with arr[j] means in pseudocode, but fail to picture the data shift itself programatically.
+
+In addition, instructors cannot show dynamic behavior through static lecture slides. These examples show the need to provide students with an interactive understanding of how these algorithms operate at a lower level through a visualization tool like Code Visualizer. Code Visualizer closes the abstraction gap students face, and offers a dynamic visualization and index management that is not prevalent on the whiteboard.
+\subsection{Hypothesis}
+Code Visualizer aims to enhance students' fundamental understanding of array searching and sorting algorithms, and will result in a better understanding of the subject matter among students. If students use Code Visualizer as a supplement to lectures and labs, their comprehension of algorithm steps, operational costs, trade-offs, etc... will improve compared to students who do not utilize the resource.
+\subsection{Limitations}
+Like any other educational tool, Code Visualizer faces a few constraints that can affect its scalability and implementation.
+
+Code Visualizer' effectiveness is limited to introductory algorithmic concepts, and the tool is not meant to address more advanced concepts such as graph algorithms or dynamic programming problems. The simplified Python subset Code Visualizer uses, while it is educationally beneficial for beginners, may not fully prepare students for real-world programming environments.
+
+Code Visualizer is a web application, and as such imposes fundamental limitations for computational capacity. Real time visualization becomes cumbersome when introducing large arrays with hundreds of elements. This constraint limits the tools utility for demonstrating behavior of an algorithm on realistically sized data sets.
+\\
+Browser compatibility also poses a limitation, as not all features may perform across different platforms and devices. Code Visualizer is not considered to be mobile-safe, and does not provide additional explicit accessibility accommodations than what is considered web-standard.
+\subsection{Delimitations}
+Code Visualizer restricts itself exclusively to array-based algorithms, as arrays are foundational data structures. Students using more advanced structures such as linked lists, stacks, and trees require preliminarily knowledge of arrays. This choice ensures depth of understanding over breadth of coverage. Specific delimitations include:
+
+\begin{enumerate}
+    \item Code Visualizer emphasizes array-based algorithms as its primary use case, as arrays are the most foundational data structure for introductory algorithm study.
+    \item Coverage restricted to introductory algorithms such as:
+    \begin{enumerate}
+        \item Linear Search
+        \item Binary Search
+        \item Bubble Sort
+        \item Selection Sort
+        \item Insertion Sort
+        \item Merge Sort
+        \item Quicksort
+    \end{enumerate}
+    \item Use of simplified subset of Python programming language for algorithm specification. Features such as generators, classes, globally scoped variables are not supported.
+    \item Array size is limited for performance and to avoid overload on the application.
+    \item Code Visualizer is exclusively a web-based tool, designed for desktop users.
+\end{enumerate}
+\subsection{Justification}
+The need for an educational tool is clearly imperative, one that allows students to step through array algorithms in a guided manner that emphasizes the crucial role of index variables and array operations. Code Visualizer aims to bridge the present gap between theory and implementation. Current tools like PythonTutor, which also visualize Python code, are broad in purpose and intent. Code Visualizer serves a distinct purpose, and uses its own subset of Python for the applications specific use case. PythonTutor also does not have a gamification aspect, which incentivizes students.
+\subsection{Objectives}
+The main objective of Code Visualizer is to enhance student's understanding of array based algorithms, providing them with an interactive simulation platform. To achieve this, the project pursues the following objectives:
+\begin{enumerate}
+    \item {Interactive visualization of array traversal}
+    \item {Predict mode as a unique learning environment}
+    \item {Forward and backward step-by-step algorithm execution}
+    \item {Comprehensive Documentation of the Visualization Language}
+    \item {Expression based evaluation}
+    \item {Time Complexity Analysis}
+    \item {Engagement Elements}
+\end{enumerate}
+\section{Background}
+\subsection{State of the Art}
+Currently, there are several visualization tools that bridge this prevalent gap between simple algorithm design and execution. The most widely regarded is PythonTutor, as it provides line-by-line execution and visualizes variables states as you step through a program. While it is useful, PythonTutor is generalized in its purpose, and as such is not specifically designed to focus on arrays or their associated algorithms.
+
+Debuggers integrated into modern IDEs like Thonny also integrate step-by-step execution, but has a more complicated interface that encourages professional development instead of structural learning. In contrast, Code Visualizer is designed with intentional limitations:
+\begin{itemize}
+    \item Focus exclusively on arrays
+    \item Emphasizes indexing variables
+    \item Integrates learning modes
+\end{itemize}
+With its borders set, Code Visualizer serves as a targeted learning environment as opposed to a generalized visualization platform.
+
+\subsection{Technological Foundation}
+Code Visualizer is implemented as a client-side web application, which requires no backend server or database to operate. The frontend stack was chosen to balance developer productivity, type safety, and rendering performance for real-time algorithm visualization.
+
+React serves as the primary UI framework, enabling a component-based architecture that maps naturally to the distinct visual regions of the tool: the code editor panel, variables window (Distinction between Frames (local and global variables) and Objects), and control bar. React's rendering model simplifies synchronizing the visual state of the code with the internal execution state of the interpreter.
+
+TypeScript is used throughout the codebase to enforce type safety across the interpreter, command pattern, and UI layer. TypeScript aids in explicit typing of constructs such as various nodes to create the AST and various commands to alter the state through a programs execution, reducing runtime errors and making the interpreter pipeline easier to debug and extend moving forward.
+
+Vite serves as the build tool and the development server used for the tool. Its fast hot module replacement (HMR) significantly reduces the iteration time during development, and its optimized production bundle keeps the client-side bundle lightweight.
+
+State management and component synchronization is handled via React's built-in hooks (\texttt{useState} and \texttt{useEffect}), without reliance on an external state library. This was sufficient for the scope of the Code Visualizer and avoids unnecessary dependency overhead. The choice to remain entirely client-side has direct benefits for the target development context, as Code Visualizer can then be served as a static bundle from any web host and requires no authentication infrastructure.
+\section{Architecture}
+\subsection{Diagram}
+\begin{figure*}[!t]
+    \centering
+    \includegraphics[height=12cm]{mermaid-flow-transparent-1x.png}
+    \caption{Code Visualizer Program Architecture Diagram to simulate program flow}
+    \label{fig:centered}
+\end{figure*}
+\begin{table*}[!t]
+\centering
+\scriptsize
+\caption{Comparison of Code Visualizer with Existing Code Visualization Tools}
+\label{tab:comparison}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{|l|c|c|c|c|}
+\hline
+\textbf{Feature} & \textbf{Code Visualizer} & \textbf{PythonTutor} & \textbf{Thonny IDE} & \textbf{VS Code} \\ \hline
+Primary Focus & Arrays \& intro algorithms & General Python execution & General program debugging & General software development \\ \hline
+Code Visualization & Yes & Yes & Yes & Limited (debugger-based) \\ \hline
+Array-Specific Emphasis & Strong & Weak & Moderate & Weak \\ \hline
+Explicit Index Tracking & Yes & Limited & No & No \\ \hline
+Step-by-step Execution & Forward \& backward & Forward \& backward & Forward only & Forward only \\ \hline
+Algorithm Visualization & Yes (comparisons, swaps) & Limited & No & No \\ \hline
+Guided Learning Modes & Yes (Predict, View) & No & No & No \\ \hline
+Language Scope & Restricted Python subset & Full Python & Full Python & Full Python + multi-language \\ \hline
+Target Audience & Introductory CS students & Broad educational use & Beginner students & Developers \\ \hline
+Web-based & Yes & Yes & No & No \\ \hline
+\end{tabular}
+\end{table*}
+Table~\ref{tab:comparison} contextualizes Code Visualizer and puts it in perspective within the landscape of existing code visualization and development tools. Although general-purpose environments such as PythonTutor, Thonny, and VS Code provide execution tracing and debugging capabilities, they are not as intuitively designed to support novice learners in understanding array-specific behavior. In particular, these tools lack explicit index tracking, guided learning modes (View and Predict), and focused visualization of array operations, all of which are critical for building foundational algorithmic intuition. Code Visualizer' restricted language scope and bidirectional execution capabilities directly address the abstraction gap discussed earlier in this paper. Rather than serving as a professional development environment, Code Visualizer functions as a conceptual learning platform, enabling students to observe, predict, and reason about algorithmic behavior at the level of individual array operations.
+
+\section{Methodology}
+\subsection{Command Pattern}
+Code Visualizer's execution is built around the Command Pattern, which is a behavioral software design pattern in which each discrete and/or atomic operation is encapsulated as a self-contained object with both a forward execution method and an inverse undo method. Rather than repetitively computing execution snapshots and storing them in memory, Code Visualizer generates undo commands at runtime as the user steps forward through an algorithm.
+
+A program is made up of one or more statements. As a program is run, Code Visualizer decomposes each of these statements into a sequence of commands, which get executed linearly. Operations such as array element swaps, binary operations, and iterating over a list generate a list of commands that alter the program state. When a command is executed, a corresponding inverse command is generated and pushed onto an undo stack. Stepping backward consumes commands from this stack, reverting the interpreter state incrementally without requiring the entire history to be precomputed or stored.
+
+This approach has several practical advantages, but the more glaring being memory management. Memory overhead scales with the number of steps taken rather than the total number of possible execution steps, which is important given the browser-based runtime environment. It also allows the system to remain responsive during large array operations, as work is deferred until the user explicitly steps forward.
+
+In terms of time complexity, each forward or backward step runs in $O(k)$, where $k$ is the number of commands generated by the current node. Space complexity grows as $O(c \cdot s)$, where $c$ is the average number of commands per node and $s$ is the number of steps the user has taken so far. The undo stack only grows as the user steps forward, meaning a user who takes 10 steps pays the cost of 10 steps regardless of how long the full algorithm would run. This contrasts with a snapshot-based approach, which would precompute and store the full state at every possible execution step upfront, at a cost of $O(n \cdot s_{total})$ where $n$ is the size of the program state.
+
+\subsection{Interpreter Pipeline}
+The Code Visualizer interpreter processes user-authored algorithm code through a multi-stage pipeline. Source code entered by the user is first tokenized and parsed into an abstract syntax tree (AST) using a restricted Python grammar. The AST is then lowered into a flat sequence of commands, which the runtime executes one step at a time. The restricted Python subset intentionally excludes generators, classes, and other constructs that are unnecessary for introductory array algorithm specification, simplifying both the parser and the interpreter.
+
+\subsection{User Testing}
+To validate Code Visualizer's educational effectiveness, a user test was conducted with introductory computer science students. A simple lab was created and given to 46 participants that was in three parts. Before starting the assignment, participant were asked how confident they were with basic concepts such as loops, variables, and functions on a scale from 1 to 5 (1 - Low Confidence and 5 - High Confidence). Out of 34 participants, the average confidence rating was 3.66.
+
+First, participants were given a simple program on paper and asked to write what the program does in a few sentences. Second, participants were given an introduction to Code Visualizer and a small warm up to get them familiar with the tool. Lastly, they were asked to write the program from Part I in the tool and track variable changes as they stepped forward and backward through the program. These tasks were designed to assess whether students could correctly predict algorithmic behavior before writing the code and if there was any improvement after the fact.
+
+\section{Future Work}
+Several directions exist for extending Code Visualizer beyond its current scope. First, support for additional data structures such as linked lists or binary trees would expand the tool's applicability to a broader range of introductory courses, though this may require considerable additions to both the visualization layer and the interpreter.
+
+Second, the current Predict Mode system could be extended with spaced repetition logic, allowing the tool to prioritize algorithm steps that a given student has historically struggled with, creating a more personalized learning experience. Predict Mode only allows the students to predict value changes as they are altered throughout the execution of the program.
+
+Third, various improvements to the PyViz language and grammar would broaden the scope of the tool to make it more accessible to more intermediate students as well. Data structures such as sets, stacks, queues and dictionaries may be useful in visualizing complex traversal algorithms such as BFS and DFS.
+
+Finally, improving mobile compatibility and accessibility, including screen reader support and keyboard-only navigation, would broaden the tool's reach to an extended student population.
+
+\section{Conclusion}
+Code Visualizer addresses a well-documented gap in introductory computer science education: the difficulty students face translating abstract algorithmic pseudocode into an accurate mental model of runtime behavior. By providing a step-by-step, index-aware visualization of array algorithms within a restricted but expressive Python subset, the tool lowers the barrier to developing genuine algorithmic intuition.
+
+The dual-mode design, combining the immediate feedback of View Mode with the active prediction demands of Predict Mode, targets both passive and active learning paths and give more creative freedom to those who want to utilize the tool for learning purposes. The underlying command pattern architecture ensure that bidirectional stepping remains efficient within the constraints of a client-side browser application.
+
+User testing suggests that Code Visualizer is a useful supplement to traditional lecture and lab instruction for introductory algorithm concepts. Future work will focus on expanding the range of supported algorithms, improving the PyViz grammar and language, and improving overall accessibility. Code Visualizer demonstrates that purposefully scoped, domain-specific educational tools can offer meaningful pedagogical advantages over general-purpose visualization platforms.
+
+\end{document}
