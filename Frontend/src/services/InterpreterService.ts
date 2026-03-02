@@ -55,6 +55,7 @@ export class InterpreterService {
 
       const program: ProgramNode = parser.results[0];
       this.commands = program.execute();
+      console.log(this.commands);
       this.currentStep = 0;
       this.executedCommands = [];
       this.undoStack = [];
@@ -97,7 +98,10 @@ export class InterpreterService {
   }
 
   stepForward(): boolean {
-    while (this.state.programCounter < this.commands.length && !this.state.error) {
+    while (
+      this.state.programCounter < this.commands.length &&
+      !this.state.error
+    ) {
       const pcBefore = this.state.programCounter;
       const command = this.commands[pcBefore];
 
@@ -123,7 +127,7 @@ export class InterpreterService {
         return false;
       }
     }
-    return false
+    return false;
   }
 
   submitPrediction(variable: string, predictedValue: string): boolean {
@@ -143,7 +147,7 @@ export class InterpreterService {
     while (this.currentStep > 0 && this.executedCommands.length > 0) {
       const commandPC = this.executedCommands.pop()!;
       const undoCommand = this.undoStack.pop()!;
-      const command = this.commands[commandPC]
+      const command = this.commands[commandPC];
 
       if (undoCommand) {
         undoCommand.do(this.state);
@@ -156,7 +160,7 @@ export class InterpreterService {
         return true;
       }
     }
-    return false
+    return false;
   }
 
   // returns a modified state snapshot that we can then send to the UI with only things is cares about.

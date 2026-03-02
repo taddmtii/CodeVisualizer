@@ -350,14 +350,17 @@ export class AssignVariableCommand extends Command {
       }
 
       // For loop iteration
-      const top = _currentState.evaluationStack[_currentState.evaluationStack.length - 1];
-      const currentLoop = _currentState.loopStack[_currentState.loopStack.length - 1];
+      const top =
+        _currentState.evaluationStack[_currentState.evaluationStack.length - 1];
+      const currentLoop =
+        _currentState.loopStack[_currentState.loopStack.length - 1];
       const isForLoopVar = currentLoop && currentLoop[2] === this._name;
       if (isForLoopVar && Array.isArray(top)) {
         const iterable = _currentState.evaluationStack.pop()!;
 
         if (Array.isArray(iterable) && iterable.length > 0) {
-          const currentIndex = _currentState.loopIterationState.get(this._name) || 0;
+          const currentIndex =
+            _currentState.loopIterationState.get(this._name) || 0;
 
           if (currentIndex < iterable.length) {
             const nextItem = iterable[currentIndex];
@@ -399,7 +402,8 @@ export class AssignVariableCommand extends Command {
           } else {
             // Loop exhausted
             const name = this._name;
-            const lastIndex = _currentState.loopIterationState.get(this._name) || 0;
+            const lastIndex =
+              _currentState.loopIterationState.get(this._name) || 0;
             const lastValue = _currentState.getVariable(this._name);
 
             _currentState.evaluationStack.push(iterable);
@@ -762,6 +766,11 @@ export class BinaryOpCommand extends Command {
     super();
     this._op = _op;
   }
+
+  isVisible(): boolean {
+    return false;
+  }
+
   do(_currentState: State) {
     const evaluatedRight = _currentState.evaluationStack.pop()!;
     const evaluatedLeft = _currentState.evaluationStack.pop()!;
@@ -838,6 +847,11 @@ export class ComparisonOpCommand extends Command {
     super();
     this._op = _op;
   }
+
+  isVisible(): boolean {
+    return false;
+  }
+
   do(_currentState: State) {
     const evaluatedRight = _currentState.evaluationStack.pop()!;
     const evaluatedLeft = _currentState.evaluationStack.pop()!;
@@ -892,6 +906,11 @@ export class UnaryOpCommand extends Command {
     super();
     this._operator = _operator;
   }
+
+  isVisible(): boolean {
+    return false;
+  }
+
   do(_currentState: State) {
     let operand = _currentState.evaluationStack.pop()!;
     let res: PythonValue = 0;
@@ -1768,7 +1787,10 @@ export class InterpolateFStringCommand extends Command {
             });
           }
           // create function that evaluates the expression in the context
-          const evalFunc = new Function(...Object.keys(context), `return ${trimmed};`);
+          const evalFunc = new Function(
+            ...Object.keys(context),
+            `return ${trimmed};`,
+          );
           const value = evalFunc(...Object.values(context));
           strValue = this.formatValue(value);
         } catch (error) {
