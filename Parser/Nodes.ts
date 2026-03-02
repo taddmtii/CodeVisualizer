@@ -398,7 +398,7 @@ export class WhileStatementNode extends StatementNode {
     commands.push(
       new PushLoopBoundsCommand(
         1,
-        blockCommands.length + conditionCommands.length + 2,
+        blockCommands.length + conditionCommands.length + 3,
         ""
       ),
     );
