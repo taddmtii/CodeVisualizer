@@ -40,7 +40,7 @@ export class State {
   private _currentExpression: ExpressionNode | null; // current highlighted expression we are evaluating
   private _currentStatement: StatementNode | null; // what statement are we on
   private _evaluationStack: PythonValue[]; // stack for expression evaluation
-  private _loopStack: [number, number][];
+  private _loopStack: [number, number, string][];
   private _outputs: PythonValue[] = [];
   private _loopIterationState: Map<string, number> = new Map(); // tracks the iteration index per loop variable.
   private _error: InterpreterError | null = null;
@@ -61,7 +61,7 @@ export class State {
     _currentExpression: ExpressionNode | null,
     _currentStatement: StatementNode | null,
     _evaluationStack: PythonValue[],
-    _loopStack: [number, number][],
+    _loopStack: [number, number, string][],
     _outputs: PythonValue[],
     _loopIterationState: Map<string, number>,
     _error: InterpreterError | null,
@@ -351,8 +351,9 @@ export class AssignVariableCommand extends Command {
 
       // For loop iteration
       const top = _currentState.evaluationStack[_currentState.evaluationStack.length - 1];
-
-      if (_currentState.loopStack.length > 0 && Array.isArray(top)) {
+      const currentLoop = _currentState.loopStack[_currentState.loopStack.length - 1];
+      const isForLoopVar = currentLoop && currentLoop[2] === this._name;
+      if (isForLoopVar && Array.isArray(top)) {
         const iterable = _currentState.evaluationStack.pop()!;
 
         if (Array.isArray(iterable) && iterable.length > 0) {
@@ -507,10 +508,13 @@ export class PushValueCommand extends Command {
 export class PushLoopBoundsCommand extends Command {
   private _start: number;
   private _end: number;
-  constructor(_start: number, _end: number) {
+  private _varName: string;
+
+  constructor(_start: number, _end: number, _varName: string = "") {
     super();
     this._start = _start;
     this._end = _end;
+    this._varName = _varName;
   }
 
   isVisible(): boolean {
@@ -520,7 +524,7 @@ export class PushLoopBoundsCommand extends Command {
   do(_currentState: State) {
     let continueTarget = _currentState.programCounter + this._start;
     let breakTarget = _currentState.programCounter + this._end;
-    _currentState.loopStack.push([continueTarget, breakTarget]);
+    _currentState.loopStack.push([continueTarget, breakTarget, this._varName]);
     this._undoCommand = new PopLoopBoundsCommand();
   }
 }
@@ -551,7 +555,7 @@ export class BreakCommand extends Command {
       );
     }
     const oldPC = _currentState.programCounter;
-    let startStop: [number, number] =
+    let startStop: [number, number, string] =
       _currentState.loopStack[_currentState.loopStack.length - 1];
     _currentState.programCounter = startStop[1];
 
