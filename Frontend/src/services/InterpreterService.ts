@@ -16,7 +16,7 @@ export class InterpreterService {
   constructor() {
     this.state = new State(
       0, // programCounter
-      null, // currentExpression
+      [], // currentExpressions
       null, // currentStatement
       [], // evaluationStack
       [], // loopStack
@@ -63,7 +63,7 @@ export class InterpreterService {
 
       this.state = new State(
         0, // programCounter
-        null, // currentExpression
+        [], // currentExpression
         null, // currentStatement
         [], // evaluationStack
         [], // loopStack
@@ -174,7 +174,7 @@ export class InterpreterService {
       currentStep: this.currentStep,
       totalSteps: this.commands.length,
       highlightedStatement: this.state.getCurrentStatementHighlight(),
-      highlightedExpression: this.state.getCurrentExpressionHighlight(),
+      highlightedExpressions: this.state.getCurrentExpressionHighlight(),
       functionDefinitions: this.state.functionDefinitions,
       scopeStack: [...this.state.scopeStack],
       scopeNames: [...this.state.scopeNames],

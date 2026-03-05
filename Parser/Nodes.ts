@@ -711,6 +711,7 @@ export class BinaryExpressionNode extends ExpressionNode {
   private _left: ExpressionNode;
   private _operator: BinaryOp;
   private _right: ExpressionNode;
+  public _opTok: moo.Token;
 
   constructor(
     _left: ExpressionNode,
@@ -722,7 +723,16 @@ export class BinaryExpressionNode extends ExpressionNode {
     this._left = _left;
     this._operator = _operator;
     this._right = _right;
+    this._opTok = _tok;
   }
+
+  public get startCol() {
+    return this._left.startCol;
+  }
+  public get endCol() {
+    return this._right.endCol;
+  }
+
   evaluate(): Command[] {
     const commands: Command[] = [];
     commands.push(new HighlightExpressionCommand(this));

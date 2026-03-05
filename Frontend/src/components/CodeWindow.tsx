@@ -6,19 +6,18 @@ interface CodeWindowProps {
   code: string;
   onCodeChange: (code: string) => void;
   highlightedStatement: { startLine: number; endLine: number } | null;
-  highlightedExpression: {
+  highlightedExpressions: {
     line: number;
     startCol: number;
     endCol: number;
-  } | null;
-  // error: InterpreterError | null;
+  }[];
 }
 
 function CodeWindow({
   code,
   onCodeChange,
   highlightedStatement,
-  highlightedExpression,
+  highlightedExpressions,
 }: CodeWindowProps) {
   // holds the reference to the Monaco editor component itself.
   const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null);
@@ -66,13 +65,13 @@ function CodeWindow({
     }
 
     // EXPRESSION HIGHLIGHTING IN BLUE
-    if (highlightedExpression) {
+    for (const expr of highlightedExpressions ?? []) {
       decorations.push({
         range: new monaco.Range(
-          highlightedExpression.line,
-          highlightedExpression.startCol,
-          highlightedExpression.line,
-          highlightedExpression.endCol + 1, // +1 because Monaco is inclusive (?)
+          expr.line,
+          expr.startCol,
+          expr.line,
+          expr.endCol + 1,
         ),
         options: {
           inlineClassName: 'expression-highlight',
@@ -88,7 +87,7 @@ function CodeWindow({
       decorationsRef.current, // old decorations to remove (why we needed the reference)
       decorations, // new decorations to add.
     );
-  }, [highlightedStatement, highlightedExpression]); // whenever we highlight a statement or highlight an expression, call this.
+  }, [highlightedStatement, highlightedExpressions]); // whenever we highlight a statement or highlight an expression, call this.
 
   return (
     <div className="w-full h-full">

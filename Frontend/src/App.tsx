@@ -17,11 +17,11 @@ export interface SimplifiedState {
   currentStep: number;
   totalSteps: number;
   highlightedStatement: { startLine: number; endLine: number } | null;
-  highlightedExpression: {
+  highlightedExpressions: {
     line: number;
     startCol: number;
     endCol: number;
-  } | null;
+  }[];
   functionDefinitions: Map<string, UserFunction>;
   scopeStack: Map<string, PythonValue>[];
   scopeNames: string[];
@@ -51,7 +51,7 @@ function App() {
     currentStep: 0,
     totalSteps: 0,
     highlightedStatement: null,
-    highlightedExpression: null,
+    highlightedExpressions: [],
     functionDefinitions: new Map<string, UserFunction>(),
     scopeNames: [],
     scopeStack: [],
@@ -92,7 +92,7 @@ function App() {
     setInterpreterState((prev) => ({
       ...prev,
       highlightedStatement: null,
-      highlightedExpression: null,
+      highlightedExpressions: []
     }));
   }
 
@@ -240,7 +240,7 @@ function App() {
             code={code}
             onCodeChange={handleCodeChange}
             highlightedStatement={interpreterState.highlightedStatement}
-            highlightedExpression={interpreterState.highlightedExpression}
+            highlightedExpressions={interpreterState.highlightedExpressions ?? []}
           />
           <ButtonControls
             onFirst={handleFirst}

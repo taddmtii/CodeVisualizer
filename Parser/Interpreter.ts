@@ -37,7 +37,7 @@ export abstract class Command {
 
 export class State {
   private _programCounter: number = 0; // which line of execution are we on.
-  private _currentExpression: ExpressionNode | null; // current highlighted expression we are evaluating
+  private _currentExpressions: ExpressionNode[] = []; // current highlighted expression we are evaluating
   private _currentStatement: StatementNode | null; // what statement are we on
   private _evaluationStack: PythonValue[]; // stack for expression evaluation
   private _loopStack: [number, number, string][];
@@ -58,7 +58,7 @@ export class State {
 
   constructor(
     _programCounter: number,
-    _currentExpression: ExpressionNode | null,
+    _currentExpressions: ExpressionNode[],
     _currentStatement: StatementNode | null,
     _evaluationStack: PythonValue[],
     _loopStack: [number, number, string][],
@@ -78,7 +78,7 @@ export class State {
     }> = [],
   ) {
     this._programCounter = _programCounter;
-    this._currentExpression = _currentExpression;
+    this._currentExpressions = _currentExpressions;
     this._currentStatement = _currentStatement;
     this._evaluationStack = _evaluationStack;
     this._loopStack = _loopStack;
@@ -194,11 +194,11 @@ export class State {
     return false;
   }
 
-  public get currentExpression() {
-    return this._currentExpression;
+  public get currentExpressions() {
+    return this._currentExpressions;
   }
-  public set currentExpression(expr: ExpressionNode | null) {
-    this._currentExpression = expr;
+  public set currentExpressions(exprs: ExpressionNode[]) {
+    this._currentExpressions = exprs;
   }
 
   public get currentStatement() {
@@ -253,17 +253,12 @@ export class State {
     };
   }
 
-  public getCurrentExpressionHighlight(): {
-    line: number;
-    startCol: number;
-    endCol: number;
-  } | null {
-    if (!this._currentExpression) return null;
-    return {
-      line: this._currentExpression.lineNum,
-      startCol: this._currentExpression.startCol,
-      endCol: this._currentExpression.endCol,
-    };
+  public getCurrentExpressionHighlight(): { line: number; startCol: number; endCol: number; }[] {
+    return this._currentExpressions.map(expr => ({
+      line: expr.lineNum,
+      startCol: expr.startCol,
+      endCol: expr.endCol,
+    }));
   }
 }
 
@@ -674,25 +669,21 @@ export class PopValueCommand extends Command {
 }
 
 export class HighlightExpressionCommand extends Command {
-  private _expression: ExpressionNode;
-  constructor(_expression: ExpressionNode) {
+  private _expression: ExpressionNode | moo.Token;
+  constructor(_expression: ExpressionNode | moo.Token) {
     super();
     this._expression = _expression;
   }
 
   do(_currentState: State) {
-    const previousExpression = _currentState.currentExpression;
+    const previousExpressions = [..._currentState.currentExpressions];
     this._undoCommand = new (class extends Command {
       do(state: State) {
-        state.currentExpression = previousExpression;
+        state.currentExpressions = previousExpressions;
       }
     })();
 
-    _currentState.currentExpression = this._expression;
-    const exprType = this._expression.constructor.name;
-    const tok = this._expression._tok
-      ? `"${this._expression._tok.text}" at line ${this._expression._tok.line}`
-      : `at line ${this._expression.lineNum}`;
+    _currentState.currentExpressions = [this._expression];
   }
 }
 
@@ -734,11 +725,16 @@ export class HighlightStatementCommand extends Command {
   }
   do(_currentState: State) {
     const previousStatement = _currentState.currentStatement;
+    const previousExpressions = [..._currentState.currentExpressions];
+
     this._undoCommand = new (class extends Command {
       do(state: State) {
         state.currentStatement = previousStatement;
+        state.currentExpressions = previousExpressions; // restore expressions on undo
       }
     })();
+
+    _currentState.currentExpressions = [];
     _currentState.currentStatement = this._statement;
   }
 }
