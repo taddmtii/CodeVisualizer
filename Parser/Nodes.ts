@@ -828,7 +828,6 @@ export class ListAccessExpressionNode extends ExpressionNode {
   }
   evaluate(): Command[] {
     const commands: Command[] = [];
-    commands.push(new HighlightExpressionCommand(this));
     commands.push(...this._list.evaluate());
     commands.push(...this._index.evaluate());
     commands.push(new IndexAccessCommand());
@@ -852,7 +851,6 @@ export class MethodCallExpressionNode extends ExpressionNode {
   }
   evaluate(): Command[] {
     const commands: Command[] = [];
-    commands.push(new HighlightExpressionCommand(this));
     if (this._list) {
       commands.push(...this._list.evaluate());
     }
@@ -879,6 +877,7 @@ export class MethodCallExpressionNode extends ExpressionNode {
         commands.push(new ContainsCommand());
       }
     }
+    commands.push(new HighlightExpressionCommand(this._methodName));
     return commands;
   }
 }
@@ -936,7 +935,7 @@ export class ListLiteralExpressionNode extends ExpressionNode {
   }
   evaluate(): Command[] {
     const commands: Command[] = [];
-    commands.push(new HighlightExpressionCommand(this));
+    // commands.push(new HighlightExpressionCommand(this));
     if (this._values) {
       commands.push(...this._values.evaluate());
     }

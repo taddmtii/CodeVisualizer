@@ -274,6 +274,10 @@ export class AssignVariableCommand extends Command {
     this._operator = _operator;
   }
 
+  isVisible(): boolean {
+    return false;
+  }
+
   do(_currentState: State) {
     try {
       // List assignment
@@ -950,6 +954,11 @@ export class AppendCommand extends Command {
   constructor() {
     super();
   }
+
+  isVisible(): boolean {
+    return false;
+  }
+
   do(_currentState: State) {
     const argsList = _currentState.evaluationStack.pop()!;
     const list = _currentState.evaluationStack.pop()!;
@@ -996,6 +1005,11 @@ export class PopCommand extends Command {
   constructor() {
     super();
   }
+
+  isVisible(): boolean {
+    return false;
+  }
+
   do(_currentState: State) {
     const list = _currentState.evaluationStack.pop()!;
     let poppedValue: PythonValue;
@@ -1168,6 +1182,11 @@ export class LenCommand extends Command {
   constructor() {
     super();
   }
+
+  isVisible(): boolean {
+    return false;
+  }
+
   do(_currentState: State) {
     const value = _currentState.evaluationStack.pop()!;
     if (typeof value === "string") {
@@ -1208,6 +1227,10 @@ export class TypeCommand extends Command {
 
 export class RangeCommand extends Command {
   private _numArgs: number;
+
+  isVisible(): boolean {
+    return false;
+  }
 
   constructor(numArgs: number) {
     super();
@@ -1288,6 +1311,11 @@ export class InputCommand extends Command {
 }
 
 export class IndexAccessCommand extends Command {
+
+  isVisible(): boolean {
+    return false;
+  }
+
   do(_currentState: State) {
     const index = _currentState.evaluationStack.pop();
     const list = _currentState.evaluationStack.pop();
@@ -1414,6 +1442,10 @@ export class ListSliceCommand extends Command {
 
 export class CreateListCommand extends Command {
   private _count: number;
+
+  isVisible(): boolean {
+    return false;
+  }
 
   constructor(_count: number) {
     super();
