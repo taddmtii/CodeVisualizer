@@ -163,9 +163,11 @@ The dual-mode design, combining the immediate feedback of View Mode with the act
 
 User testing suggests that Code Visualizer is a useful supplement to traditional lecture and lab instruction for introductory algorithm concepts. Future work will focus on expanding the range of supported algorithms, improving the PyViz grammar and language, and improving overall accessibility. Code Visualizer demonstrates that purposefully scoped, domain-specific educational tools can offer meaningful pedagogical advantages over general-purpose visualization platforms.
 
+\subsection{Known Issues}
+There are a few known issues present in the current version of the visualizer. First, the "Link to list" option occasionally registers duplicate list entries, resulting in two identically named options that appear in the selection menu. Both entries refer to the same underlying list, so either option can be selected without affecting overall functionality. Second, the final statement or expression that is highlighted during program execution is not cleared upon completion, leaving the last line visually active after the program has finished. Third, complex expressions used as arguments within range-based loops may occasionally trigger a stack underflow error.
 
 \subsection{Future Work}
-Several directions exist for extending Code Visualizer beyond its current scope. First, support for additional data structures such as linked lists or binary trees would expand the tool's applicability to a broader range of introductory courses, though this may require considerable additions to both the visualization layer and the interpreter.
+Several directions exist for extending Code Visualizer beyond its current scope. Before all else, the outstanding bugs need to be addressed and fixed. Support for additional data structures such as linked lists or binary trees would expand the tool's applicability to a broader range of introductory courses, though this may require considerable additions to both the visualization layer and the interpreter.
 
 Second, the current Predict Mode system could be extended with spaced repetition logic, allowing the tool to prioritize algorithm steps that a given student has historically struggled with, creating a more personalized learning experience. Predict Mode only allows the students to predict value changes as they are altered throughout the execution of the program.
 
